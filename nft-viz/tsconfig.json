@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": [
+      "esnext",
+        "DOM",
+    ],
+  },
+  "baseUrl": "./",
+  "rootDir": "src",
+  "outDir": "dist",
+  "skipLibCheck": true,
+  "include": [
+    "src/index.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
+}
