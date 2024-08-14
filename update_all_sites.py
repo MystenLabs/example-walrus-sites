@@ -7,10 +7,11 @@ It reads a configuration that provides the directories of the sites and their ob
 the site-builder CLI.
 """
 
-import yaml
-import subprocess
 import os
+import subprocess
 from argparse import ArgumentParser, Namespace
+
+import yaml
 from pydantic import BaseModel, TypeAdapter
 
 SITE_BUILDER = "site-builder"
