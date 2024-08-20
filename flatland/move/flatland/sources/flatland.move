@@ -1,14 +1,13 @@
 /// The flatland NFT game project.
 module flatland::flatland;
 
-use std::string::{Self, String};
+use std::string::String;
 use sui::address;
 use sui::display;
 use sui::package;
 use sui::random::{Random, RandomGenerator};
 
 const BASE36: vector<u8> = b"0123456789abcdefghijklmnopqrstuvwxyz";
-const EINDEX_OUT_OF_BOUNDS: u64 = 0;
 const VISUALIZATION_SITE: address =
     @0x901fb0569e5054eea1bea1500d1fdfefa8b5cc4def4574c0c99c64b3af24a3ab;
 
@@ -77,7 +76,7 @@ entry fun mint(random: &Random, ctx: &mut TxContext) {
 
 fun new(rng: &mut RandomGenerator, ctx: &mut TxContext): Flatlander {
     let id = object::new(ctx);
-    let b36addr = to_b36(object::uid_to_address(&id));
+    let b36addr = to_b36(id.uid_to_address());
     let color = random_color(rng);
     let sides = random_sides(rng);
     let image_blob = svg(sides, &color);
@@ -110,9 +109,7 @@ fun svg(num_sides: u8, color: &Color): String {
     chunks.reverse();
 
     let mut str = vector[];
-    while (!chunks.is_empty()) {
-        str.append(chunks.pop_back());
-    };
+    chunks.destroy!(|chunk| str.append(chunk));
     str.to_string()
 }
 
@@ -140,30 +137,23 @@ public fun to_b36(addr: address): String {
     let size = 2 * vector::length(&source);
     let b36copy = BASE36;
     let base = vector::length(&b36copy);
-    let mut encoding: vector<u8> = vector::empty();
-    let mut i = 0;
-    while (i < size) {
-        encoding.push_back(0);
-        i = i + 1;
-    };
+    let mut encoding = vector::tabulate!(size, |_| 0);
     let mut high = size - 1;
 
-    let mut j = 0;
-    while (j < vector::length(&source)) {
+    source.length().do!(|j| {
         let mut carry = source[j] as u64;
         let mut it = size - 1;
         while (it > high || carry != 0) {
             carry = carry + 256 * (encoding[it] as u64);
             let value = (carry % base) as u8;
-            vector_mut_position(&mut encoding, value, it);
+            *&mut encoding[it] = value;
             carry = carry / base;
             it = it - 1;
         };
         high = it;
-        j = j + 1;
-    };
+    });
 
-    let mut str: vector<u8> = vector::empty();
+    let mut str: vector<u8> = vector[];
     let mut k = 0;
     let mut leading_zeros = true;
     while (k < vector::length(&encoding)) {
@@ -177,18 +167,5 @@ public fun to_b36(addr: address): String {
         };
         k = k + 1;
     };
-    string::utf8(str)
-}
-
-/// Changes the value at the position.
-fun vector_mut_position<Element>(
-    v: &mut vector<Element>,
-    e: Element,
-    i: u64,
-): Element {
-    assert!(!v.is_empty(), EINDEX_OUT_OF_BOUNDS);
-    v.push_back(e);
-    let last_idx = v.length() - 1;
-    v.swap(i, last_idx);
-    v.pop_back()
+    str.to_string()
 }
