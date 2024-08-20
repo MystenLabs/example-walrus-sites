@@ -30,7 +30,7 @@ insert_final_newline = true
 indent_size = unset
 
 # Ignore paths
-[{.git/**/*,**/*.lock,**/Move.toml,LICENSE,**/*.html,**/*.css,**/*.json}]
+[{.git/**/*,**/*.lock,**/Move.toml,LICENSE,**/*.html,**/*.css,**/*.json,portal/pnpm-lock.yaml}]
 charset = unset
 end_of_line = unset
 indent_size = unset
