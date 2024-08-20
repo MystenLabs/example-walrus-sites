@@ -20,7 +20,7 @@ export function MintFlatlander({ onCreated }: { onCreated: (id: string) => void 
         const txb = new TransactionBlock();
 
         txb.moveCall({
-            arguments: [],
+            arguments: [txb.object("0x8")], // 0x8 is the Random Object
             target: `${flatlanderPackageId}::flatland::mint`,
         });
 
