@@ -3,346 +3,320 @@
   SPDX-License-Identifier: Apache-2.0
 -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <meta charset="UTF-8" />
-        <title>Size stored on walrus</title>
-        <style>
-            body {
-                font-family: monospace;
-            }
-            th,
-            td {
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-            .spinner {
-                border: 3px solid #f3f3f3;
-                border-radius: 50%;
-                border-top: 3px solid #6d6d6d;
-                width: 10px;
-                height: 10px;
-                animation: spin 2s linear infinite;
-            }
+  <head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <meta charset="UTF-8" />
+    <title>Size stored on walrus</title>
+    <style>
+      body {
+        font-family: monospace;
+      }
+      th,
+      td {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      .spinner {
+        border: 3px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 3px solid #6d6d6d;
+        width: 10px;
+        height: 10px;
+        animation: spin 2s linear infinite;
+      }
 
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-        </style>
-    </head>
-    <p id="timestamp"></p>
-    <h1 id="capacity">Fectching...</h1>
-    <p id="available-capacity"></p>
-    <h2 id="plotHeading">Storage plot</h2>
-    <div>
-        <div style="display: flex; align-items: center; gap: 10px">
-            <label for="numEvents">Number of events to fetch:</label>
-            <input type="number" id="numEvents" value="100" />
-            <button id="plotButton" onclick="main()">Plot</button>
-            <div id="spinner" class="spinner" style="display: none"></div>
-        </div>
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <p id="timestamp"></p>
+  <h1 id="capacity">Fectching...</h1>
+  <p id="available-capacity"></p>
+  <h2 id="plotHeading">Storage plot</h2>
+  <div>
+    <div style="display: flex; align-items: center; gap: 10px">
+      <label for="numEvents">Number of events to fetch:</label>
+      <input type="number" id="numEvents" value="100" />
+      <button id="plotButton" onclick="main()">Plot</button>
+      <div id="spinner" class="spinner" style="display: none"></div>
     </div>
-    <div id="myPlot" style="width: 100%; max-width: 700px"></div>
-    <h2>Last Events</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Event</th>
-                <th>Timestamp</th>
-                <th>Unencoded size (B)</th>
-            </tr>
-        </thead>
-        <tbody id="events"></tbody>
-    </table>
+  </div>
+  <div id="myPlot" style="width: 100%; max-width: 700px"></div>
+  <h2>Last Events</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>Timestamp</th>
+        <th>Unencoded size (B)</th>
+      </tr>
+    </thead>
+    <tbody id="events"></tbody>
+  </table>
 
-    <script>
-        const WALRUS_SYSTEM =
-            "0x6c957cf363ec968582f24e3e1a638c968cec1fa228999c560ec7925994906315";
-        const WALRUS_PACKAGE =
-            "0x7e12d67a52106ddd5f26c6ff4fe740ba5dea7cfc138d5b1d33863ba9098aa6fe";
-        const DIGEST_LEN = 32;
-        const BLOB_ID_LEN = 32;
+  <script>
+    const WALRUS_SYSTEM =
+      "0x6c957cf363ec968582f24e3e1a638c968cec1fa228999c560ec7925994906315";
+    const WALRUS_PACKAGE =
+      "0x7e12d67a52106ddd5f26c6ff4fe740ba5dea7cfc138d5b1d33863ba9098aa6fe";
+    const DIGEST_LEN = 32;
+    const BLOB_ID_LEN = 32;
 
-        /**
-         * Fetch _all_ events from the full node.
-         *
-         * This function uses pagination to fetch all events.
-         */
-        async function getAllEvents(maxNum = 100) {
-            let allEvents = [];
-            let cursor = null;
-            while (true) {
-                if (maxNum !== null && allEvents.length >= maxNum) {
-                    break;
-                }
-                const [events, nextCursor] = await getEvents(cursor);
-                allEvents = allEvents.concat(events);
-                if (nextCursor === null) {
-                    break;
-                }
-                cursor = nextCursor;
-            }
-            return allEvents;
+    /**
+     * Fetch _all_ events from the full node.
+     *
+     * This function uses pagination to fetch all events.
+     */
+    async function getAllEvents(maxNum = 100) {
+      let allEvents = [];
+      let cursor = null;
+      while (true) {
+        if (maxNum !== null && allEvents.length >= maxNum) {
+          break;
         }
-
-        async function getEvents(cursor = null) {
-            const response = await fetch(
-                "https://fullnode.testnet.sui.io:443",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        jsonrpc: "2.0",
-                        id: 1,
-                        method: "suix_queryEvents",
-                        params: [
-                            {
-                                MoveModule: {
-                                    package: WALRUS_PACKAGE,
-                                    module: "blob",
-                                },
-                            },
-                            cursor,
-                            100,
-                            true,
-                        ],
-                    }),
-                },
-            );
-
-            const events = await response.json();
-            if (!events.result) {
-                return [[], null];
-            }
-            let nextCursor;
-            if (
-                events.result.nextCursor !== null &&
-                events.result.data.length > 0
-            ) {
-                nextCursor = events.result.nextCursor;
-            } else {
-                nextCursor = null;
-            }
-            let eventList = [];
-            for (const event of events.result.data) {
-                const extr = extractEventData(event);
-                eventList.push(extr);
-            }
-            return [eventList, nextCursor];
+        const [events, nextCursor] = await getEvents(cursor);
+        allEvents = allEvents.concat(events);
+        if (nextCursor === null) {
+          break;
         }
+        cursor = nextCursor;
+      }
+      return allEvents;
+    }
 
-        function extractEventData(eventJson) {
-            const txDigest = eventJson.id.txDigest;
-            const eventType = eventJson.type.slice(68 + 13);
-            const parsedEvent = eventJson.parsedJson;
-            // const blobId = numToBlobId(parseInt(parsedEvent.blob_id));
-            const timestampMs = parseInt(eventJson.timestampMs);
-            const timeDate = new Date(timestampMs);
+    async function getEvents(cursor = null) {
+      const response = await fetch("https://fullnode.testnet.sui.io:443", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          id: 1,
+          method: "suix_queryEvents",
+          params: [
+            {
+              MoveModule: {
+                package: WALRUS_PACKAGE,
+                module: "blob",
+              },
+            },
+            cursor,
+            100,
+            true,
+          ],
+        }),
+      });
 
-            let size = "";
-            if (eventType === "BlobRegistered") {
-                size = parsedEvent.size;
-            }
+      const events = await response.json();
+      if (!events.result) {
+        return [[], null];
+      }
+      let nextCursor;
+      if (events.result.nextCursor !== null && events.result.data.length > 0) {
+        nextCursor = events.result.nextCursor;
+      } else {
+        nextCursor = null;
+      }
+      let eventList = [];
+      for (const event of events.result.data) {
+        const extr = extractEventData(event);
+        eventList.push(extr);
+      }
+      return [eventList, nextCursor];
+    }
 
-            return {
-                timestampMs: Number(timestampMs),
-                timeDate,
-                eventType,
-                size: Number(size),
-                // blobId,
-                txDigest,
-            };
+    function extractEventData(eventJson) {
+      const txDigest = eventJson.id.txDigest;
+      const eventType = eventJson.type.slice(68 + 13);
+      const parsedEvent = eventJson.parsedJson;
+      // const blobId = numToBlobId(parseInt(parsedEvent.blob_id));
+      const timestampMs = parseInt(eventJson.timestampMs);
+      const timeDate = new Date(timestampMs);
+
+      let size = "";
+      if (eventType === "BlobRegistered") {
+        size = parsedEvent.size;
+      }
+
+      return {
+        timestampMs: Number(timestampMs),
+        timeDate,
+        eventType,
+        size: Number(size),
+        // blobId,
+        txDigest,
+      };
+    }
+
+    async function getSystemObject() {
+      // Create the request with json body
+      const response = await fetch("https://fullnode.testnet.sui.io:443", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          method: "sui_getObject",
+          id: 1,
+          params: [
+            WALRUS_SYSTEM,
+            {
+              showType: true,
+              showOwner: false,
+              showPreviousTransaction: true,
+              showDisplay: false,
+              showContent: true,
+              showBcs: false,
+            },
+          ],
+        }),
+      });
+      return response.json();
+    }
+
+    function plotEvents(events, systemSize, nShards) {
+      let x = [];
+      let y = [];
+      let cumsum = 0;
+      for (const event of events) {
+        if (event.eventType === "BlobRegistered") {
+          x.push(event.timeDate);
+          y.push((systemSize - cumsum) / 1e9);
+          const encoded = encodedBlobLength(event.size, nShards);
+          cumsum += encoded;
         }
+      }
+      const data = [
+        {
+          x: x,
+          y: y,
+          mode: "markers+lines",
+          line: { shape: "vh", markers: true },
+        },
+      ];
 
-        async function getSystemObject() {
-            // Create the request with json body
-            const response = await fetch(
-                "https://fullnode.testnet.sui.io:443",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        jsonrpc: "2.0",
-                        method: "sui_getObject",
-                        id: 1,
-                        params: [
-                            WALRUS_SYSTEM,
-                            {
-                                showType: true,
-                                showOwner: false,
-                                showPreviousTransaction: true,
-                                showDisplay: false,
-                                showContent: true,
-                                showBcs: false,
-                            },
-                        ],
-                    }),
-                },
-            );
-            return response.json();
+      // Define Layout
+      const layout = {
+        xaxis: { title: "Time & date" },
+        yaxis: { title: "Used capacity [GB]" },
+        // title: "House Prices vs. Size",
+      };
+
+      // Display using Plotly
+      Plotly.newPlot("myPlot", data, layout, { staticPlot: false });
+    }
+
+    function encodedBlobLength(unencodedLength, nShards) {
+      let sliversSize =
+        (sourceSymbolsPrimary(nShards) + sourceSymbolsSecondary(nShards)) *
+        symbolSize(unencodedLength, nShards);
+      return nShards * (sliversSize + metadataSize(nShards));
+    }
+
+    function sourceSymbolsPrimary(nShards) {
+      return nShards - maxByzantine(nShards) - decodingSafetyLimit(nShards);
+    }
+
+    function sourceSymbolsSecondary(nShards) {
+      return nShards - 2 * maxByzantine(nShards) - decodingSafetyLimit(nShards);
+    }
+
+    function nSourceSymbols(nShards) {
+      return sourceSymbolsPrimary(nShards) * sourceSymbolsSecondary(nShards);
+    }
+
+    function symbolSize(unencodedLength, nShards) {
+      let nSymbols = nSourceSymbols(nShards);
+      return Math.floor((unencodedLength - 1) / nSymbols + 1);
+    }
+
+    function metadataSize(nShards) {
+      return nShards * DIGEST_LEN * 2 + BLOB_ID_LEN;
+    }
+
+    function decodingSafetyLimit(nShards) {
+      return Math.min(Math.floor(maxByzantine(nShards) / 5), 5);
+    }
+
+    function maxByzantine(nShards) {
+      return Math.floor((nShards - 1) / 3);
+    }
+
+    async function main() {
+      const system = await getSystemObject();
+      if (system.result) {
+        const used = system.result.data.content.fields.used_capacity_size;
+        const total = system.result.data.content.fields.total_capacity_size;
+        const available = total - used;
+        const usedGb = Math.round((used / 1e9) * 1000) / 1000;
+        const totalTb = Math.round((total / 1e12) * 1000) / 1000;
+        const availableTb = Math.round((available / 1e12) * 1000) / 1000;
+
+        const color = availableTb > 1 ? "green" : "red";
+
+        document.getElementById("capacity").innerText =
+          `Walrus used capacity: ${usedGb} GB`;
+        document.getElementById("available-capacity").innerText =
+          `Approximately ${availableTb} TB are available out of ${totalTb} TB.`;
+        document.getElementById("available-capacity").style.color = color;
+
+        await getEventsAndPlot(system);
+
+        document.getElementById("timestamp").innerText =
+          `Last updated: ${new Date().toLocaleString()}`;
+      }
+    }
+
+    async function getEventsAndPlot(system) {
+      const numEvents = document.getElementById("numEvents").value;
+      document.getElementById("spinner").style.display = "block";
+      const events = await getAllEvents(numEvents);
+      document.getElementById("spinner").style.display = "none";
+      const used = system.result.data.content.fields.used_capacity_size;
+      const nShards =
+        system.result.data.content.fields.current_committee.fields.bls_committee
+          .fields.n_shards;
+      plotEvents(events, used, nShards);
+      document.getElementById("plotHeading").innerText =
+        `Storage plot for the last ${events.length} events`;
+      const eventsTable = document.getElementById("events");
+      for (const event of events) {
+        const row = document.createElement("tr");
+        const eventCell = document.createElement("td");
+        const timeCell = document.createElement("td");
+        const sizeCell = document.createElement("td");
+        // const blobCell = document.createElement("td");
+        eventCell.innerText = event.eventType;
+        timeCell.innerText = event.timeDate.toLocaleString();
+        sizeCell.innerText = event.size;
+        // blobCell.innerText = event.blobId;
+        row.appendChild(eventCell);
+        row.appendChild(timeCell);
+        row.appendChild(sizeCell);
+        // row.appendChild(blobCell);
+        eventsTable.appendChild(row);
+      }
+    }
+
+    document
+      .getElementById("numEvents")
+      .addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("plotButton").click();
         }
-
-        function plotEvents(events, systemSize, nShards) {
-            let x = [];
-            let y = [];
-            let cumsum = 0;
-            for (const event of events) {
-                if (event.eventType === "BlobRegistered") {
-                    x.push(event.timeDate);
-                    y.push((systemSize - cumsum) / 1e9);
-                    const encoded = encodedBlobLength(event.size, nShards);
-                    cumsum += encoded;
-                }
-            }
-            const data = [
-                {
-                    x: x,
-                    y: y,
-                    mode: "markers+lines",
-                    line: { shape: "vh", markers: true },
-                },
-            ];
-
-            // Define Layout
-            const layout = {
-                xaxis: { title: "Time & date" },
-                yaxis: { title: "Used capacity [GB]" },
-                // title: "House Prices vs. Size",
-            };
-
-            // Display using Plotly
-            Plotly.newPlot("myPlot", data, layout, { staticPlot: false });
-        }
-
-        function encodedBlobLength(unencodedLength, nShards) {
-            let sliversSize =
-                (sourceSymbolsPrimary(nShards) +
-                    sourceSymbolsSecondary(nShards)) *
-                symbolSize(unencodedLength, nShards);
-            return nShards * (sliversSize + metadataSize(nShards));
-        }
-
-        function sourceSymbolsPrimary(nShards) {
-            return (
-                nShards - maxByzantine(nShards) - decodingSafetyLimit(nShards)
-            );
-        }
-
-        function sourceSymbolsSecondary(nShards) {
-            return (
-                nShards -
-                2 * maxByzantine(nShards) -
-                decodingSafetyLimit(nShards)
-            );
-        }
-
-        function nSourceSymbols(nShards) {
-            return (
-                sourceSymbolsPrimary(nShards) * sourceSymbolsSecondary(nShards)
-            );
-        }
-
-        function symbolSize(unencodedLength, nShards) {
-            let nSymbols = nSourceSymbols(nShards);
-            return Math.floor((unencodedLength - 1) / nSymbols + 1);
-        }
-
-        function metadataSize(nShards) {
-            return nShards * DIGEST_LEN * 2 + BLOB_ID_LEN;
-        }
-
-        function decodingSafetyLimit(nShards) {
-            return Math.min(Math.floor(maxByzantine(nShards) / 5), 5);
-        }
-
-        function maxByzantine(nShards) {
-            return Math.floor((nShards - 1) / 3);
-        }
-
-        async function main() {
-            const system = await getSystemObject();
-            if (system.result) {
-                const used =
-                    system.result.data.content.fields.used_capacity_size;
-                const total =
-                    system.result.data.content.fields.total_capacity_size;
-                const available = total - used;
-                const usedGb = Math.round((used / 1e9) * 1000) / 1000;
-                const totalTb = Math.round((total / 1e12) * 1000) / 1000;
-                const availableTb =
-                    Math.round((available / 1e12) * 1000) / 1000;
-
-                const color = availableTb > 1 ? "green" : "red";
-
-                document.getElementById(
-                    "capacity",
-                ).innerText = `Walrus used capacity: ${usedGb} GB`;
-                document.getElementById(
-                    "available-capacity",
-                ).innerText = `Approximately ${availableTb} TB are available out of ${totalTb} TB.`;
-                document.getElementById("available-capacity").style.color =
-                    color;
-
-                await getEventsAndPlot(system);
-
-                document.getElementById(
-                    "timestamp",
-                ).innerText = `Last updated: ${new Date().toLocaleString()}`;
-            }
-        }
-
-        async function getEventsAndPlot(system) {
-            const numEvents = document.getElementById("numEvents").value;
-            document.getElementById("spinner").style.display = "block";
-            const events = await getAllEvents(numEvents);
-            document.getElementById("spinner").style.display = "none";
-            const used = system.result.data.content.fields.used_capacity_size;
-            const nShards =
-                system.result.data.content.fields.current_committee.fields
-                    .bls_committee.fields.n_shards;
-            plotEvents(events, used, nShards);
-            document.getElementById(
-                "plotHeading",
-            ).innerText = `Storage plot for the last ${events.length} events`;
-            const eventsTable = document.getElementById("events");
-            for (const event of events) {
-                const row = document.createElement("tr");
-                const eventCell = document.createElement("td");
-                const timeCell = document.createElement("td");
-                const sizeCell = document.createElement("td");
-                // const blobCell = document.createElement("td");
-                eventCell.innerText = event.eventType;
-                timeCell.innerText = event.timeDate.toLocaleString();
-                sizeCell.innerText = event.size;
-                // blobCell.innerText = event.blobId;
-                row.appendChild(eventCell);
-                row.appendChild(timeCell);
-                row.appendChild(sizeCell);
-                // row.appendChild(blobCell);
-                eventsTable.appendChild(row);
-            }
-        }
-
-        document
-            .getElementById("numEvents")
-            .addEventListener("keypress", function (event) {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    document.getElementById("plotButton").click();
-                }
-            });
-        main();
-    </script>
-    <body></body>
+      });
+    main();
+  </script>
+  <body></body>
 </html>
