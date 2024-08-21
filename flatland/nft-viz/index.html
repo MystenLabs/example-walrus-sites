@@ -1,39 +1,49 @@
-<!DOCTYPE html>
+<!--
+  Copyright (c) Mysten Labs, Inc.
+  SPDX-License-Identifier: Apache-2.0
+-->
+
+<!--
+    Copyright (c) Mysten Labs, Inc.
+    SPDX-License-Identifier: Apache-2.0
+-->
+
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Flatland</title>
-        <style>
-            :root {
-                --color: 0, 0, 0;
-            }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flatland</title>
+    <style>
+      :root {
+        --color: 0, 0, 0;
+      }
 
-            body {
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                color: rgba(var(--color), 1);
-                font-family: Helvetica, sans-serif;
-                background-color: rgba(var(--color), 0.2);
-            }
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: rgba(var(--color), 1);
+        font-family: Helvetica, sans-serif;
+        background-color: rgba(var(--color), 0.2);
+      }
 
-            .container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div id="picture">
-                <script src="./index.js"></script>
-            </div>
-            <div id="text"></div>
-        </div>
-    </body>
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="picture">
+        <script src="./index.js"></script>
+      </div>
+      <div id="text"></div>
+    </div>
+  </body>
 </html>

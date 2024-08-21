@@ -1,3 +1,6 @@
+// Copyright (c) Mysten Labs, Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
 import { isValidSuiObjectId, fromHEX } from "@mysten/sui.js/utils";
 import {
@@ -18,6 +21,8 @@ import { MintFlatlander } from "./MintFlatlander";
 import baseX from "base-x";
 
 const BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
+const SITE_OBJECT_ID = "0x049b6d3f34789904efcc20254400b7dca5548ee35cd7b5b145a211f85b2532fa";
+const FLATLAND_LINK = "https://en.wikipedia.org/wiki/Flatland";
 const b36 = baseX(BASE36);
 
 function explorerLink(id: string): string {
@@ -59,8 +64,7 @@ function App() {
                     </Flex>
                     <Flex mt="9">
                         <Text>
-                            <Em>Flatland</Em> is an{" "}
-                            <Link href="https://en.wikipedia.org/wiki/Flatland">imaginary</Link>{" "}
+                            <Em>Flatland</Em> is an <Link href={FLATLAND_LINK}>imaginary</Link>{" "}
                             world with only three dimensions—width, length, and time—without any
                             height. Its inhabitants, the <Em>Flatlanders</Em>, have evolved to live
                             in this flat world, and thus resemble 2D geometric shapes. What
@@ -165,13 +169,9 @@ function App() {
                                     <li>
                                         First and foremost, this site hosted on <Em>Sui</Em>, and
                                         all the resources it needs are loaded from <Em>Walrus</Em>.
-                                        You can see the Sui object corresponding to this site in the{" "}
-                                        <Link
-                                            href={explorerLink(
-                                                "0x049b6d3f34789904efcc20254400b7dca5548ee35cd7b5b145a211f85b2532fa",
-                                            )}
-                                        >
-                                            explorer.
+                                        You can see the Sui object corresponding to this site{" "}
+                                        <Link href={explorerLink(SITE_OBJECT_ID)}>
+                                            in the explorer.
                                         </Link>
                                     </li>
                                     <li>

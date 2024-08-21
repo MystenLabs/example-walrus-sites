@@ -1,3 +1,6 @@
+// Copyright (c) Mysten Labs, Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 import { SuiClient } from "@mysten/sui.js/client";
 import { bcs } from "@mysten/sui.js/bcs";
 import {
@@ -80,7 +83,7 @@ export async function drawFlatlander(flatlander: Flatlander) {
     const offset = -Math.PI / 2;
     const color = colorString(flatlander.color);
 
-    // Change the css color varialbe.
+    // Change the css color variable.
     document.documentElement.style.setProperty("--color", `${color}`);
 
     // Draw the polygon.
@@ -152,7 +155,7 @@ function subdomainToObjectId(subdomain: string): string | null {
         "obtained object id: ",
         objectId,
         isValidSuiObjectId(objectId),
-        isValidSuiAddress(objectId)
+        isValidSuiAddress(objectId),
     );
     return isValidSuiObjectId(objectId) ? objectId : null;
 }
@@ -192,7 +195,8 @@ function notFound() {
 
         const line1 = document.createElement("p");
         line1.innerHTML =
-            "the color and the number of sides is taken from the NFT;</br>this URL is unique to this Flatlander, and always will be.";
+            "the color and the number of sides is taken from the NFT; \
+            </br>this URL is unique to this Flatlander, and always will be.";
         document.getElementById("text").appendChild(line1);
     });
 })();

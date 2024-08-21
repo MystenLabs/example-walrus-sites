@@ -1,5 +1,11 @@
 # A collection of example Walrus Sites
 
+## Contirbuting
+
+If you are considering contributing, please read our [contributing guidelines](CONTRIBUTING.md).
+
+## The examples
+
 - `capacity`: A site showing the utilization of storage on Walrus, as well as the blob registration events. https://capacity.walrus.site
 - `flatland`: Site showcasing automated site generation from NFTs. https://flatland.walrus.site
 - `publish`: Allows to publish blob to Walrus. This has been taken from the [Walrus docs

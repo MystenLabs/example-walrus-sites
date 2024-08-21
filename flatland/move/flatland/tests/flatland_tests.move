@@ -14,5 +14,5 @@ module flatland::flatland_tests {
         assert!(b36_test_setup(@0x31487601236501328476, b"11wchdxusx6n4f3q".to_string()), 0);
     }
 
-    // Tests are incomplete. PRs are welocme!
+    // Tests are incomplete. PRs are welcome!
 }
