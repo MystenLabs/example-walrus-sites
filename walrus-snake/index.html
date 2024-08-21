@@ -68,7 +68,8 @@
             let canvas = document.getElementById("game");
             let context = canvas.getContext("2d");
 
-            // the canvas width & height, snake x & y, and the apple x & y, all need to be a multiples of the grid size in order for collision detection to work
+            // the canvas width & height, snake x & y, and the apple x & y, all need to be a
+            // multiples of the grid size in order for collision detection to work
             // (e.g. 16 * 25 = 400)
             let grid = 16;
             let count = 0;
@@ -143,13 +144,7 @@
               }
 
               // draw apple
-              context.drawImage(
-                appleImage,
-                apple.x - grid,
-                apple.y - grid,
-                3 * grid,
-                3 * grid,
-              );
+              context.drawImage(appleImage, apple.x - grid, apple.y - grid, 3 * grid, 3 * grid);
               // context.fillStyle = 'red';
               // context.fillRect(apple.x, apple.y, grid - 1, grid - 1);
 
@@ -161,9 +156,6 @@
                   context.fillStyle = "SaddleBrown";
                   context.fillRect(cell.x, cell.y, grid - 1, grid - 1);
                 }
-
-                // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
-                // context.fillRect(cell.x, cell.y, grid - 1, grid - 1);
 
                 // snake ate apple
                 if (cell.x === apple.x && cell.y === apple.y) {
@@ -177,10 +169,7 @@
                 // check collision with all cells after this one (modified bubble sort)
                 for (let i = index + 1; i < snake.cells.length; i++) {
                   // snake occupies same space as a body part. reset game
-                  if (
-                    cell.x === snake.cells[i].x &&
-                    cell.y === snake.cells[i].y
-                  ) {
+                  if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
                     snake.x = 160;
                     snake.y = 160;
                     snake.cells = [];
@@ -235,12 +224,9 @@
           </script>
 
           <p>
-            Click the game area to start playing, and use the arrow keys to move
-            around.<br />
+            Click the game area to start playing, and use the arrow keys to move around.<br />
             The game has been adapted from
-            <a
-              href="https://gist.github.com/straker/ff00b4b49669ad3dec890306d348adc4"
-              >this Gist</a
+            <a href="https://gist.github.com/straker/ff00b4b49669ad3dec890306d348adc4">this Gist</a
             >.
           </p>
         </div>

@@ -3,6 +3,11 @@
   SPDX-License-Identifier: Apache-2.0
 -->
 
+<!--
+    Copyright (c) Mysten Labs, Inc.
+    SPDX-License-Identifier: Apache-2.0
+-->
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -63,10 +68,8 @@
   </table>
 
   <script>
-    const WALRUS_SYSTEM =
-      "0x6c957cf363ec968582f24e3e1a638c968cec1fa228999c560ec7925994906315";
-    const WALRUS_PACKAGE =
-      "0x7e12d67a52106ddd5f26c6ff4fe740ba5dea7cfc138d5b1d33863ba9098aa6fe";
+    const WALRUS_SYSTEM = "0x6c957cf363ec968582f24e3e1a638c968cec1fa228999c560ec7925994906315";
+    const WALRUS_PACKAGE = "0x7e12d67a52106ddd5f26c6ff4fe740ba5dea7cfc138d5b1d33863ba9098aa6fe";
     const DIGEST_LEN = 32;
     const BLOB_ID_LEN = 32;
 
@@ -264,8 +267,7 @@
 
         const color = availableTb > 1 ? "green" : "red";
 
-        document.getElementById("capacity").innerText =
-          `Walrus used capacity: ${usedGb} GB`;
+        document.getElementById("capacity").innerText = `Walrus used capacity: ${usedGb} GB`;
         document.getElementById("available-capacity").innerText =
           `Approximately ${availableTb} TB are available out of ${totalTb} TB.`;
         document.getElementById("available-capacity").style.color = color;
@@ -284,8 +286,7 @@
       document.getElementById("spinner").style.display = "none";
       const used = system.result.data.content.fields.used_capacity_size;
       const nShards =
-        system.result.data.content.fields.current_committee.fields.bls_committee
-          .fields.n_shards;
+        system.result.data.content.fields.current_committee.fields.bls_committee.fields.n_shards;
       plotEvents(events, used, nShards);
       document.getElementById("plotHeading").innerText =
         `Storage plot for the last ${events.length} events`;
@@ -308,14 +309,12 @@
       }
     }
 
-    document
-      .getElementById("numEvents")
-      .addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          document.getElementById("plotButton").click();
-        }
-      });
+    document.getElementById("numEvents").addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("plotButton").click();
+      }
+    });
     main();
   </script>
   <body></body>
