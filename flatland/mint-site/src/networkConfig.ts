@@ -1,3 +1,6 @@
+// Copyright (c) Mysten Labs, Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 import { getFullnodeUrl } from "@mysten/sui.js/client";
 import { TESTNET_FLATLAND_PACKAGE_ID, MAINNET_FLATLAND_PACKAGE_ID } from "./constants.ts";
 import { createNetworkConfig } from "@mysten/dapp-kit";

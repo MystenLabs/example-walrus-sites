@@ -1,0 +1,36 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.6.0
+  hooks:
+  - id: check-merge-conflict
+  - id: check-yaml
+  - id: trailing-whitespace
+  - id: check-symlinks
+  - id: end-of-file-fixer
+  - id: mixed-line-ending
+  - id: trailing-whitespace
+- repo: https://github.com/editorconfig-checker/editorconfig-checker.python
+  rev: "2.7.3"
+  hooks:
+  - id: editorconfig-checker
+    alias: ec
+- repo: https://github.com/notken12/licensesnip
+  rev: 19b1186
+  hooks:
+    - id: licensesnip
+      args: []
+      pass_filenames: false
+- repo: https://github.com/crate-ci/typos
+  rev: v1.22.7
+  hooks:
+  - id: typos
+    pass_filenames: false
+- repo: https://github.com/psf/black-pre-commit-mirror
+  rev: 24.8.0
+  hooks:
+    - id: black
+      # It is recommended to specify the latest version of Python
+      # supported by your project here, or alternatively use
+      # pre-commit's default_language_version, see
+      # https://pre-commit.com/#top_level-default_language_version
+      language_version: python3.11

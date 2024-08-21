@@ -13,6 +13,3 @@
 - name: publish
   object_id: "0xa42979eb4f7fdef7f95226f76bc191f0f21eae012faa2f8381b49c7a1ee3f71f"
   path: ./publish
-# - name: stream
-#   object_id: "0x591a6f0f5c06028e7832ec9d879427670a4e0fa7cb93fbdfebc7a9a84d9bc9c8"
-#   path: /path/to/potatoes-secret/dist
