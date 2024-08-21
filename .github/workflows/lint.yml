@@ -44,23 +44,9 @@ jobs:
       - run: cargo install licensesnip@1.5.0
       - run: licensesnip check
 
-  check-all:
-    name: Check if all lint jobs succeeded
-    if: always()
-    needs:
-      - pr-title
-      - editorconfig
-      - typos
-      - license-headers
-    runs-on: ubuntu-latest
-    steps:
-    - name: Decide whether all needed jobs succeeded
-      uses: re-actors/alls-green@v1.2.2
-      with:
-        jobs: ${{ toJSON(needs) }}
-
   prettier:
     runs-on: ubuntu-latest
+    name: Check frontent code formatting
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -74,6 +60,24 @@ jobs:
 
   black:
     runs-on: ubuntu-latest
+    name: Check Python formatting
     steps:
       - uses: actions/checkout@v4
       - uses: psf/black@stable
+
+  check-all:
+    name: Check if all lint jobs succeeded
+    if: always()
+    needs:
+      - pr-title
+      - editorconfig
+      - typos
+      - license-headers
+      - prettier
+      - black
+    runs-on: ubuntu-latest
+    steps:
+    - name: Decide whether all needed jobs succeeded
+      uses: re-actors/alls-green@v1.2.2
+      with:
+        jobs: ${{ toJSON(needs) }}
