@@ -133,7 +133,7 @@ fun random_color(rng: &mut RandomGenerator): Color {
 }
 
 fun random_sides(rng: &mut RandomGenerator): u8 {
-    rng.generate_u8_in_range(3, 15)
+    rng.generate_u8_in_range(3, 14)
 }
 
 public fun to_b36(addr: address): String {
