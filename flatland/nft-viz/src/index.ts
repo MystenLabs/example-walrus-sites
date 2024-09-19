@@ -12,7 +12,7 @@ import {
 } from "@mysten/sui.js/utils";
 import * as baseX from "base-x";
 
-const FLATLAND_PACKAGE = "0x6160e43cb836a943f682b7610ede3bf5010d26caa854904ab47d525c01cf6850";
+const FLATLAND_PACKAGE = "0xa2b9003b38b4082dbfb46f26e29a69789162864c217260dc1ff778fa72b3425c";
 const BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
 const b36 = baseX(BASE36);
 
