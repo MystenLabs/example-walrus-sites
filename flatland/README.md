@@ -22,3 +22,21 @@ You can read more about how the redirects work at https://docs.walrus.ai/docs/re
 
 ### `move/flatland`
 The contract code for minting the NFTs.
+
+### Redeployment
+
+0. For convenience, use this alias for the site builder: `alias site-builder="<path-to-walrus-sites-repo>/target/release/site-builder --config site-builder/assets/builder-example.yaml"`
+
+1. Publish nft-viz to walrus sites: 
+
+`cd nft-viz && pnpm run build && cp index.html dist/ && site-builder publish <path-to-nft-viz-dist>`.
+
+2. In `flatland.move` update the `const VISUALIZATION_SITE: address = @<new-object-id-of-nft-viz>`.
+
+3. Redeploy the contract `cd move/flatland && sui client publish`.
+
+4. Update the `FLATLAND_PACKAGE` in `nft-viz/src/index.ts`.
+
+5. Update the nft-viz `cd nft-viz && pnpm run build && cp index.html dist/ && site-builder update <path-to-nft-viz>/dist <VISUALIZATION_SITE_OID>`
+
+6. Update the `TESTNET_FLATLAND_PACKAGE_ID` inside `mint-site/src/constants.ts` and deploy to WS: `cd mint-site && pnpm run build && site-builder publish <path-to-mint-site>/dist`.

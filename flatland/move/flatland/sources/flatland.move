@@ -9,7 +9,7 @@ use sui::random::{Random, RandomGenerator};
 
 const BASE36: vector<u8> = b"0123456789abcdefghijklmnopqrstuvwxyz";
 const VISUALIZATION_SITE: address =
-    @0x901fb0569e5054eea1bea1500d1fdfefa8b5cc4def4574c0c99c64b3af24a3ab;
+    @0x8aec5b7ee5f1d66fadcdbbf7e02540435cbcb729625878928ec2e6580553621a;
 
 // editorconfig-checker-disable
 const POINTS_TABLE: vector<vector<u8>> = vector[
