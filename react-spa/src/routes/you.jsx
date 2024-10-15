@@ -1,11 +1,10 @@
 import { Form } from "react-router-dom";
 
-export default function Contact() {
+export default function You() {
   const contact = {
-    first: "Your",
-    last: "Name",
-    avatar: "https://robohash.org/you.png?size=200x200",
-    twitter: "your_handle",
+    first: "Roby",
+    last: "Walson",
+    twitter: "@"+"suinetwork",
     notes: "Some notes",
     favorite: true,
   };
@@ -17,7 +16,7 @@ export default function Contact() {
           key={contact.avatar}
           src={
             contact.avatar ||
-            `https://robohash.org/${contact.id}.png?size=200x200`
+            `https://robohash.org/${contact.first+contact.last}.png?size=200x200`
           }
         />
       </div>

@@ -7,7 +7,8 @@ import {
 import "./index.css";
 import Root from "./routes/root";
 import ErrorPage from "./error-page";
-import Contact from "./routes/contact";
+import You from "./routes/you";
+import Friend from "./routes/friend";
 
 const router = createBrowserRouter([
   {
@@ -16,8 +17,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
         {
-        path: "contacts/:contactId",
-        element: <Contact />,
+        path: "you/",
+        element: <You />,
+        },
+        {
+        path: "friend/",
+        element: <Friend />,
         },
     ],
   },
