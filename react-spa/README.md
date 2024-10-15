@@ -21,5 +21,5 @@ bun run build
 ## Deploy
 
 ```bash
-chmod u+x deploy.sh && ./deploy.sh
+bun run build && cp ws-resources.json /dist && site-builder publish /dist
 ```
