@@ -18,7 +18,7 @@ Once you mint the NFT, you will see a link to the `nft-viz` site.
 This site is linked from the minting site, and is also linked from the NFTs Display standard.
 Once you click on the link from the minting site, you will be taken to the `nft-viz` site. This site is unique for each NFT.
 ![nft-viz](./doc-assets/nft-viz.png)
-You can read more about how the redirects work at https://docs.walrus.ai/docs/redirects
+You can read more about how the redirects work at <https://docs.walrus.site/walrus-sites/redirects.html>.
 
 ### `move/flatland`
 The contract code for minting the NFTs.
