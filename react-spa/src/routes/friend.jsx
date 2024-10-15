@@ -5,7 +5,7 @@ export default function Friend() {
     first: "Wall-e",
     last: "Iceberg",
     twitter: "@"+"mysten_labs",
-    notes: "Some notes",
+    notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     favorite: true,
   };
 

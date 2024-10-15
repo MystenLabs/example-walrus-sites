@@ -5,7 +5,7 @@ export default function You() {
     first: "Roby",
     last: "Walson",
     twitter: "@"+"suinetwork",
-    notes: "Some notes",
+    notes: "Suspendisse varius enim in eros elementum tristique.",
     favorite: true,
   };
 
