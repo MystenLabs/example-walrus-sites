@@ -4,138 +4,138 @@
 */
 
 html {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 *,
 *:before,
 *:after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-        "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 html,
 body {
-    height: 100%;
-    margin: 0;
-    line-height: 1.5;
-    color: #121212;
+  height: 100%;
+  margin: 0;
+  line-height: 1.5;
+  color: #121212;
 }
 textarea,
 input,
 button {
-    font-size: 1rem;
-    font-family: inherit;
-    border: none;
-    border-radius: 8px;
-    padding: 0.5rem 0.75rem;
-    box-shadow:
-        0 0px 1px hsla(0, 0%, 0%, 0.2),
-        0 1px 2px hsla(0, 0%, 0%, 0.2);
-    background-color: white;
-    line-height: 1.5;
-    margin: 0;
+  font-size: 1rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  box-shadow:
+    0 0px 1px hsla(0, 0%, 0%, 0.2),
+    0 1px 2px hsla(0, 0%, 0%, 0.2);
+  background-color: white;
+  line-height: 1.5;
+  margin: 0;
 }
 button {
-    color: #3992ff;
-    font-weight: 500;
+  color: #3992ff;
+  font-weight: 500;
 }
 
 textarea:hover,
 input:hover,
 button:hover {
-    box-shadow:
-        0 0px 1px hsla(0, 0%, 0%, 0.6),
-        0 1px 2px hsla(0, 0%, 0%, 0.2);
+  box-shadow:
+    0 0px 1px hsla(0, 0%, 0%, 0.6),
+    0 1px 2px hsla(0, 0%, 0%, 0.2);
 }
 
 button:active {
-    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
-    transform: translateY(1px);
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
+  transform: translateY(1px);
 }
 
 #contact h1 {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
 }
 #contact h1 form {
-    display: flex;
-    align-items: center;
-    margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
 }
 #contact h1 form button {
-    box-shadow: none;
-    font-size: 1.5rem;
-    font-weight: 400;
-    padding: 0;
+  box-shadow: none;
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0;
 }
 #contact h1 form button[value="true"] {
-    color: #a4a4a4;
+  color: #a4a4a4;
 }
 #contact h1 form button[value="true"]:hover,
 #contact h1 form button[value="false"] {
-    color: #eeb004;
+  color: #eeb004;
 }
 
 form[action$="destroy"] button {
-    color: #f44250;
+  color: #f44250;
 }
 
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 #root {
-    display: flex;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
 #sidebar {
-    width: 22rem;
-    background-color: #f7f7f7;
-    border-right: solid 1px #e3e3e3;
-    display: flex;
-    flex-direction: column;
+  width: 22rem;
+  background-color: #f7f7f7;
+  border-right: solid 1px #e3e3e3;
+  display: flex;
+  flex-direction: column;
 }
 
 #sidebar > * {
-    padding-left: 2rem;
-    padding-right: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 #sidebar h1 {
-    font-size: 1rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 1rem 2rem;
-    border-top: 1px solid #e3e3e3;
-    order: 1;
-    line-height: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 1rem 2rem;
+  border-top: 1px solid #e3e3e3;
+  order: 1;
+  line-height: 1;
 }
 
 #sidebar h1::before {
-content: url("data:image/svg+xml,%3Csvg width='25' height='18' viewBox='0 0 25 18' fill='none' \
+  content: url("data:image/svg+xml,%3Csvg width='25' height='18' viewBox='0 0 25 18' fill='none' \
 xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.4127 6.4904C18.6984 6.26581 18.3295 6.34153 \
 17.5802 6.25965C16.4219 6.13331 15.9604 5.68062 15.7646 4.51554C15.6551 3.86516 15.7844 2.9129 \
 15.5048 2.32334C14.9699 1.19921 13.7183 0.695046 12.461 0.982805C11.3994 1.22611 10.516 2.28708 \
@@ -156,256 +156,256 @@ fill='black'/%3E%3Cpath d='M22.3677 17.0965C20.9051 17.1046 19.7046 15.9217 19.6
 14.4649C19.6882 13.0023 20.8712 11.8017 22.3279 11.7935C23.7906 11.7854 24.9911 \
 12.9683 24.9993 14.4251C25.0075 15.8866 23.8245 17.0883 22.3677 17.0965Z'\
 fill='black'/%3E%3C/svg%3E%0A");
-    margin-right: 0.5rem;
-    position: relative;
-    top: 1px;
+  margin-right: 0.5rem;
+  position: relative;
+  top: 1px;
 }
 
 #sidebar > div {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #e3e3e3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e3e3e3;
 }
 
 #sidebar > div form {
-    position: relative;
+  position: relative;
 }
 
 #sidebar > div form input[type="search"] {
-    width: 100%;
-    padding-left: 2rem;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'\
+  width: 100%;
+  padding-left: 2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'\
     class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='%23999' \
     stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' \
     d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: 0.625rem 0.75rem;
-    background-size: 1rem;
-    position: relative;
+  background-repeat: no-repeat;
+  background-position: 0.625rem 0.75rem;
+  background-size: 1rem;
+  position: relative;
 }
 
 #sidebar > div form input[type="search"].loading {
-    background-image: none;
+  background-image: none;
 }
 
 #search-spinner {
-    width: 1rem;
-    height: 1rem;
-    background-image: url("data:image/svg+xml,%3Csvg \
+  width: 1rem;
+  height: 1rem;
+  background-image: url("data:image/svg+xml,%3Csvg \
     xmlns='http://www.w3.org/2000/svg' fill='none' \
     viewBox='0 0 24 24'%3E%3Cpath stroke='%23000' \
     strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' \
     d='M20 4v5h-.582m0 0a8.001 8.001 0 00-15.356 2m15.356-2H15M4 \
     20v-5h.581m0 0a8.003 8.003 0 0015.357-2M4.581 15H9' /%3E%3C/svg%3E");
-    animation: spin 1s infinite linear;
-    position: absolute;
-    left: 0.625rem;
-    top: 0.75rem;
+  animation: spin 1s infinite linear;
+  position: absolute;
+  left: 0.625rem;
+  top: 0.75rem;
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 #sidebar nav {
-    flex: 1;
-    overflow: auto;
-    padding-top: 1rem;
+  flex: 1;
+  overflow: auto;
+  padding-top: 1rem;
 }
 
 #sidebar nav a span {
-    float: right;
-    color: #eeb004;
+  float: right;
+  color: #eeb004;
 }
 #sidebar nav a.active span {
-    color: inherit;
+  color: inherit;
 }
 
 i {
-    color: #818181;
+  color: #818181;
 }
 #sidebar nav .active i {
-    color: inherit;
+  color: inherit;
 }
 
 #sidebar ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 #sidebar li {
-    margin: 0.25rem 0;
+  margin: 0.25rem 0;
 }
 
 #sidebar nav a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
 
-    white-space: pre;
-    padding: 0.5rem;
-    border-radius: 8px;
-    color: inherit;
-    text-decoration: none;
-    gap: 1rem;
+  white-space: pre;
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  gap: 1rem;
 }
 
 #sidebar nav a:hover {
-    background: #e3e3e3;
+  background: #e3e3e3;
 }
 
 #sidebar nav a.active {
-    background: hsl(224, 98%, 58%);
-    color: white;
+  background: hsl(224, 98%, 58%);
+  color: white;
 }
 
 #sidebar nav a.pending {
-    color: hsl(224, 98%, 58%);
+  color: hsl(224, 98%, 58%);
 }
 
 #detail {
-    flex: 1;
-    padding: 2rem 4rem;
-    width: 100%;
+  flex: 1;
+  padding: 2rem 4rem;
+  width: 100%;
 }
 
 #detail.loading {
-    opacity: 0.25;
-    transition: opacity 200ms;
-    transition-delay: 200ms;
+  opacity: 0.25;
+  transition: opacity 200ms;
+  transition-delay: 200ms;
 }
 
 #contact {
-    max-width: 40rem;
-    display: flex;
+  max-width: 40rem;
+  display: flex;
 }
 
 #contact h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
-    line-height: 1.2;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
 }
 
 #contact h1 + p {
-    margin: 0;
+  margin: 0;
 }
 
 #contact h1 + p + p {
-    white-space: break-spaces;
+  white-space: break-spaces;
 }
 
 #contact h1:focus {
-    outline: none;
-    color: hsl(224, 98%, 58%);
+  outline: none;
+  color: hsl(224, 98%, 58%);
 }
 
 #contact a[href*="twitter"] {
-    display: flex;
-    font-size: 1.5rem;
-    color: #3992ff;
-    text-decoration: none;
+  display: flex;
+  font-size: 1.5rem;
+  color: #3992ff;
+  text-decoration: none;
 }
 #contact a[href*="twitter"]:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 #contact img {
-    width: 12rem;
-    height: 12rem;
-    background: #c8c8c8;
-    margin-right: 2rem;
-    border-radius: 1.5rem;
-    object-fit: cover;
+  width: 12rem;
+  height: 12rem;
+  background: #c8c8c8;
+  margin-right: 2rem;
+  border-radius: 1.5rem;
+  object-fit: cover;
 }
 
 #contact h1 ~ div {
-    display: flex;
-    gap: 0.5rem;
-    margin: 1rem 0;
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
 }
 
 #contact-form {
-    display: flex;
-    max-width: 40rem;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  max-width: 40rem;
+  flex-direction: column;
+  gap: 1rem;
 }
 #contact-form > p:first-child {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 #contact-form > p:first-child > :nth-child(2) {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 #contact-form > p:first-child,
 #contact-form label {
-    display: flex;
+  display: flex;
 }
 #contact-form p:first-child span,
 #contact-form label span {
-    width: 8rem;
+  width: 8rem;
 }
 #contact-form p:first-child input,
 #contact-form label input,
 #contact-form label textarea {
-    flex-grow: 2;
+  flex-grow: 2;
 }
 
 #contact-form-avatar {
-    margin-right: 2rem;
+  margin-right: 2rem;
 }
 
 #contact-form-avatar img {
-    width: 12rem;
-    height: 12rem;
-    background: hsla(0, 0%, 0%, 0.2);
-    border-radius: 1rem;
+  width: 12rem;
+  height: 12rem;
+  background: hsla(0, 0%, 0%, 0.2);
+  border-radius: 1rem;
 }
 
 #contact-form-avatar input {
-    box-sizing: border-box;
-    width: 100%;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 #contact-form p:last-child {
-    display: flex;
-    gap: 0.5rem;
-    margin: 0 0 0 8rem;
+  display: flex;
+  gap: 0.5rem;
+  margin: 0 0 0 8rem;
 }
 
 #contact-form p:last-child button[type="button"] {
-    color: inherit;
+  color: inherit;
 }
 
 #zero-state {
-    margin: 2rem auto;
-    text-align: center;
-    color: #818181;
+  margin: 2rem auto;
+  text-align: center;
+  color: #818181;
 }
 
 #zero-state a {
-    color: inherit;
+  color: inherit;
 }
 
 #zero-state a:hover {
-    color: #121212;
+  color: #121212;
 }
 
 #zero-state:before {
-    display: block;
-    margin-bottom: 0.5rem;
-content: url("data:image/svg+xml,%3Csvg width='50' height='33' viewBox='0 0 50 33' fill='none' \
+  display: block;
+  margin-bottom: 0.5rem;
+  content: url("data:image/svg+xml,%3Csvg width='50' height='33' viewBox='0 0 50 33' fill='none' \
 xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M38.8262 11.1744C37.3975 10.7252 36.6597 \
 10.8766 35.1611 10.7128C32.8444 10.4602 31.9215 9.55475 31.5299 7.22456C31.3108 5.92377 \
 31.5695 4.01923 31.0102 2.8401C29.9404 0.591789 27.4373 -0.416556 24.9225 0.158973C22.7992 \
@@ -431,9 +431,9 @@ fill='%23E3E3E3'/%3E%3Cpath d='M44.736 32.387C41.8107 32.4033 39.4096\
 }
 
 #error-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
