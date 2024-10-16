@@ -68,8 +68,8 @@
   </table>
 
   <script>
-    const WALRUS_SYSTEM = "0x6c957cf363ec968582f24e3e1a638c968cec1fa228999c560ec7925994906315";
-    const WALRUS_PACKAGE = "0x7e12d67a52106ddd5f26c6ff4fe740ba5dea7cfc138d5b1d33863ba9098aa6fe";
+    const WALRUS_SYSTEM = "0x1b863856ae3fc4e7ae635bf83429be82d882679b47fd158c9e8e48f0a1e67199";
+    const WALRUS_PACKAGE = "0x9f992cc2430a1f442ca7a5ca7638169f5d5c00e0ebc3977a65e9ac6e497fe5ef";
     const DIGEST_LEN = 32;
     const BLOB_ID_LEN = 32;
 
@@ -109,7 +109,7 @@
             {
               MoveModule: {
                 package: WALRUS_PACKAGE,
-                module: "blob",
+                module: "system",
               },
             },
             cursor,
@@ -139,7 +139,7 @@
 
     function extractEventData(eventJson) {
       const txDigest = eventJson.id.txDigest;
-      const eventType = eventJson.type.slice(68 + 13);
+      const eventType = eventJson.type.slice(76);
       const parsedEvent = eventJson.parsedJson;
       // const blobId = numToBlobId(parseInt(parsedEvent.blob_id));
       const timestampMs = parseInt(eventJson.timestampMs);
@@ -286,7 +286,7 @@
       document.getElementById("spinner").style.display = "none";
       const used = system.result.data.content.fields.used_capacity_size;
       const nShards =
-        system.result.data.content.fields.current_committee.fields.bls_committee.fields.n_shards;
+        system.result.data.content.fields.committee.fields.n_shards;
       plotEvents(events, used, nShards);
       document.getElementById("plotHeading").innerText =
         `Storage plot for the last ${events.length} events`;

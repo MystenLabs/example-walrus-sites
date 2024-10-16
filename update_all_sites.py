@@ -11,19 +11,19 @@ import os
 import subprocess
 from argparse import ArgumentParser, Namespace
 
-
 import yaml
 from pydantic import BaseModel, TypeAdapter
 
 SITE_BUILDER = "site-builder"
 SITE_BUILDER_CONFIG = "~/.config/walrus/site-builder-config.yaml"
 CONFIG = "publish-config.yaml"
+N_EPOCHS = 198
 
 
 class Site(BaseModel):
     name: str
     object_id: str
-    path: os.PathLike
+    path: os.PathLike | None = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -42,6 +42,7 @@ def parse_args() -> Namespace:
     parser.add_argument("--builder-config", default=SITE_BUILDER_CONFIG)
     parser.add_argument("--builder-bin", default=SITE_BUILDER)
     parser.add_argument("--config", default=CONFIG)
+    parser.add_argument("--publish", action="store_true")
     return parser.parse_args()
 
 
@@ -52,17 +53,39 @@ def read_config(filename: str) -> list[Site]:
     return sites
 
 
-def update_site(builder_name: str, builder_config: str, site: Site) -> None:
+def update_site(
+    builder_name: str, builder_config: str, site: Site, publish: bool
+) -> None:
     print(
         f"Update site {site.name} with object ID {site.object_id} at path {site.path}"
     )
+    command = "publish" if publish else "update"
+
     cmd = [
         builder_name,
         "--config",
         builder_config,
-        "update",
+        command,
         site.path,
-        site.object_id,
+    ]
+    if not publish:
+        cmd.append(site.object_id)
+    else:
+        cmd.extend(["--site-name", site.name])
+    cmd.extend(["--epochs", str(N_EPOCHS)])
+
+    print(" ".join(cmd))
+    subprocess.run(cmd, check=True)
+
+
+def publish_site(builder_name: str, builder_config: str, site: Site) -> None:
+    print(f"Publish the site {site.name} at path {site.path}")
+    cmd = [
+        builder_name,
+        "--config",
+        builder_config,
+        "publish",
+        site.path,
         "--force",
     ]
     print(" ".join(cmd))
@@ -80,7 +103,12 @@ def main():
     print("Continue? [Enter/Ctrl+c]")
     input()
     for site in config:
-        update_site(args.builder_bin, os.path.expanduser(args.builder_config), site)
+        update_site(
+            args.builder_bin,
+            os.path.expanduser(args.builder_config),
+            site,
+            args.publish,
+        )
 
 
 if __name__ == "__main__":
