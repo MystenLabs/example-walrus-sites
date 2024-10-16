@@ -1,6 +1,6 @@
-# SPA example 
+# SPA example
 
-This is a simple example of a Single Page Application (SPA) that 
+This is a simple example of a Single Page Application (SPA) that
 can be deployed on Walrus Sites.
 
 ## Install
