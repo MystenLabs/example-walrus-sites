@@ -21,7 +21,7 @@ import { MintFlatlander } from "./MintFlatlander";
 import baseX from "base-x";
 
 const BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
-const SITE_OBJECT_ID = "0x049b6d3f34789904efcc20254400b7dca5548ee35cd7b5b145a211f85b2532fa";
+const SITE_OBJECT_ID = "0xd20b90149409ba5d005d4a2cd981db9494bc3cdb2f04c47ca1af98dd8f71610a";
 const FLATLAND_LINK = "https://en.wikipedia.org/wiki/Flatland";
 const b36 = baseX(BASE36);
 
@@ -92,7 +92,7 @@ function App() {
                                     <Text>
                                         <Strong>
                                             Please connect your Testnet wallet (button on the top
-                                            right)
+                                            left)
                                         </Strong>
                                     </Text>
                                 )}

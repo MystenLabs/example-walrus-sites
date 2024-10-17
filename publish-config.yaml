@@ -4,12 +4,12 @@
 - name: capacity
   object_id: "0x13dc75e35c9a97fa69fa018e4a0dccaa3b784afdf32fbb5f27cc94d16a08b479"
   path: ./capacity
-- name: flatland-mint
-  object_id: "0x049b6d3f34789904efcc20254400b7dca5548ee35cd7b5b145a211f85b2532fa"
-  path: ./flatland/mint-site/dist
-- name: flatland-viz
-  object_id: "0x901fb0569e5054eea1bea1500d1fdfefa8b5cc4def4574c0c99c64b3af24a3ab"
-  path: ./flatland/nft-viz/dist
+# - name: flatland-mint
+#   object_id: "0x049b6d3f34789904efcc20254400b7dca5548ee35cd7b5b145a211f85b2532fa"
+#   path: ./flatland/mint-site/dist
+# - name: flatland-viz
+#   object_id: "0x901fb0569e5054eea1bea1500d1fdfefa8b5cc4def4574c0c99c64b3af24a3ab"
+#   path: ./flatland/nft-viz/dist
 - name: publish
   object_id: "0xa42979eb4f7fdef7f95226f76bc191f0f21eae012faa2f8381b49c7a1ee3f71f"
   path: ./publish
