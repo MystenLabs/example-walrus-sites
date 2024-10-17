@@ -285,8 +285,7 @@
       const events = await getAllEvents(numEvents);
       document.getElementById("spinner").style.display = "none";
       const used = system.result.data.content.fields.used_capacity_size;
-      const nShards =
-        system.result.data.content.fields.committee.fields.n_shards;
+      const nShards = system.result.data.content.fields.committee.fields.n_shards;
       plotEvents(events, used, nShards);
       document.getElementById("plotHeading").innerText =
         `Storage plot for the last ${events.length} events`;
