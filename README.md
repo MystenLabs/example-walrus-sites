@@ -1,6 +1,6 @@
 # A collection of example Walrus Sites
 
-## Contirbuting
+## Contributing
 
 If you are considering contributing, please read our [contributing guidelines](CONTRIBUTING.md).
 
