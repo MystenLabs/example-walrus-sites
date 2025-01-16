@@ -73,8 +73,8 @@
         const numEpochs = document.getElementById("epochs-input").value;
         const basePublisherUrl = document.getElementById("publisher-url-input").value;
 
-        // Submit a PUT request with the file's content as the body to the /v1/store endpoint.
-        return fetch(`${basePublisherUrl}/v1/store?epochs=${numEpochs}`, {
+        // Submit a PUT request with the file's content as the body to the /v1/blobs endpoint.
+        return fetch(`${basePublisherUrl}/v1/blobs?epochs=${numEpochs}`, {
           method: "PUT",
           body: inputFile,
         }).then((response) => {
@@ -123,7 +123,7 @@
 
         // The URL used to download and view the blob.
         const baseAggregatorUrl = document.getElementById("aggregator-url-input").value;
-        const blobUrl = `${baseAggregatorUrl}/v1/${info.blobId}`;
+        const blobUrl = `${baseAggregatorUrl}/v1/blobs/${info.blobId}`;
 
         // The URL for viewing the event or object on chain
         const suiUrl = `${info.suiBaseUrl}/${info.suiRef}`;
