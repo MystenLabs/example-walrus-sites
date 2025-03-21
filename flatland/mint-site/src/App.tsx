@@ -30,7 +30,8 @@ function explorerLink(id: string): string {
 }
 
 function flatlanderLink(id: string): string {
-    return "https://" + b36.encode(fromHEX(id.substring(2))) + ".walrus.site";
+    const domain = "its-friday-night-and-I-am-working-on-flatland"
+    return `http://${domain}.walrus.site/${b36.encode(fromHEX(id.substring(2)))}`
 }
 
 function App() {

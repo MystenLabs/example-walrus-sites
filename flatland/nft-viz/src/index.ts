@@ -136,7 +136,7 @@ function getSubdomainAndPath(scope: string): Path | null {
     if (hostname.length === 3 || (hostname.length === 2 && hostname[1] === "localhost")) {
         // Accept only one level of subdomain eg `subdomain.example.com` or `subdomain.localhost` in
         // case of local development
-        const path = url.pathname == "/" ? "/index.html" : removeLastSlash(url.pathname);
+        const path = url.pathname == "/" ? "/404.html" : removeLastSlash(url.pathname);
         return { subdomain: hostname[0], path } as Path;
     }
     return null;
@@ -149,8 +149,9 @@ function removeLastSlash(path: string): string {
     return path.endsWith("/") ? path.slice(0, -1) : path;
 }
 
-function subdomainToObjectId(subdomain: string): string | null {
-    const objectId = "0x" + toHEX(b36.decode(subdomain.toLowerCase()));
+
+function pathToObjectId(path: string): string | null {
+    const objectId = "0x" + toHEX(b36.decode(path.toLowerCase()));
     console.log(
         "obtained object id: ",
         objectId,
@@ -159,6 +160,7 @@ function subdomainToObjectId(subdomain: string): string | null {
     );
     return isValidSuiObjectId(objectId) ? objectId : null;
 }
+
 
 function notFound() {
     // Display a not found message.
@@ -175,8 +177,7 @@ function notFound() {
         notFound();
         return;
     }
-
-    const objectId = subdomainToObjectId(parsedUrl.subdomain);
+    const objectId = pathToObjectId(window.location.pathname.slice(1));
     if (!objectId) {
         notFound();
         return;
