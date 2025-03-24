@@ -50,7 +50,7 @@ fun init(otw: FLATLAND, ctx: &mut TxContext) {
 
     display.add(
         b"link".to_string(),
-        b"https://flatland.wal.app/0x${hexaddr}".to_string(),
+        b"https://flatland.wal.app/0x{hexaddr}".to_string(),
     );
     display.add(
         b"image_url".to_string(),
