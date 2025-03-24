@@ -12,6 +12,7 @@ import {
 } from "@mysten/sui.js/utils";
 import * as baseX from "base-x";
 
+// TODO: replace with the mainnet package.
 const FLATLAND_PACKAGE = "0x4cb65566af16acb9ae48c437e99653e77c06c1b712329486987223ca99f44575";
 const BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
 const b36 = baseX(BASE36);
