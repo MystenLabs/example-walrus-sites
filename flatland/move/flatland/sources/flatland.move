@@ -8,8 +8,6 @@ use sui::package;
 use sui::random::{Random, RandomGenerator};
 
 const BASE36: vector<u8> = b"0123456789abcdefghijklmnopqrstuvwxyz";
-const VISUALIZATION_SITE: address =
-    @0xa169a210be515b075859c1692f5cab95cadfb02a164a175abf67d1d475d94e65;
 
 // editorconfig-checker-disable
 const POINTS_TABLE: vector<vector<u8>> = vector[
@@ -56,10 +54,6 @@ fun init(otw: FLATLAND, ctx: &mut TxContext) {
     display.add(
         b"image_url".to_string(),
         b"data:image/svg+xml;charset=utf8,{image_blob}".to_string(),
-    );
-    display.add(
-        b"walrus site address".to_string(),
-        VISUALIZATION_SITE.to_string(),
     );
     display.update_version();
 
@@ -172,4 +166,9 @@ public fun to_b36(addr: address): String {
         k = k + 1;
     };
     str.to_string()
+}
+
+#[test_only]
+public fun mint_internal(random: &Random, ctx: &mut TxContext) {
+    mint(random, ctx)
 }
