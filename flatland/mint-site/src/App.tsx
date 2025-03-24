@@ -18,20 +18,18 @@ import {
 import { useState } from "react";
 import { ArrowRightIcon, CopyIcon } from "@radix-ui/react-icons";
 import { MintFlatlander } from "./MintFlatlander";
-import baseX from "base-x";
 
-const BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
+// TODO: update the SITE_OBJECT for mainnet.
 const SITE_OBJECT_ID = "0xd20b90149409ba5d005d4a2cd981db9494bc3cdb2f04c47ca1af98dd8f71610a";
 const FLATLAND_LINK = "https://en.wikipedia.org/wiki/Flatland";
-const b36 = baseX(BASE36);
 
 function explorerLink(id: string): string {
     return "https://suiscan.xyz/testnet/object/" + id;
 }
 
 function flatlanderLink(id: string): string {
-    const domain = "its-friday-night-and-I-am-working-on-flatland"
-    return `http://${domain}.walrus.site/${b36.encode(fromHEX(id.substring(2)))}`
+    const domain = "flatland"
+    return `http://${domain}.wal.app/${fromHEX(id.substring(2))}`
 }
 
 function App() {
