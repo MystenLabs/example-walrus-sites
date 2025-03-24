@@ -165,7 +165,7 @@ function notFound() {
         return;
     }
     const objectId = window.location.pathname.slice(1);
-    console.log('NFT objectId', objectId)
+    console.log("NFT objectId", objectId);
     if (!objectId) {
         notFound();
         return;

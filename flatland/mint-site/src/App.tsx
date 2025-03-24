@@ -28,8 +28,8 @@ function explorerLink(id: string): string {
 }
 
 function flatlanderLink(id: string): string {
-    const domain = "flatland"
-    return `http://${domain}.wal.app/0x${id.substring(2)}`
+    const domain = "flatland";
+    return `http://${domain}.wal.app/0x${id.substring(2)}`;
 }
 
 function App() {
