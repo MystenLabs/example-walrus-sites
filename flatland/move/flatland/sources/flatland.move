@@ -5,6 +5,7 @@ use std::string::String;
 use sui::address;
 use sui::display;
 use sui::package;
+use sui::hex;
 use sui::random::{Random, RandomGenerator};
 
 const BASE36: vector<u8> = b"0123456789abcdefghijklmnopqrstuvwxyz";
@@ -36,7 +37,7 @@ public struct Flatlander has key, store {
     id: UID,
     color: Color,
     sides: u8,
-    b36addr: String,
+    hexaddr: String,
     image_blob: String,
 }
 
@@ -49,7 +50,7 @@ fun init(otw: FLATLAND, ctx: &mut TxContext) {
 
     display.add(
         b"link".to_string(),
-        b"https://{b36addr}.walrus.site".to_string(),
+        b"https://flatland.wal.app/0x${hexaddr}".to_string(),
     );
     display.add(
         b"image_url".to_string(),
@@ -72,7 +73,7 @@ entry fun mint(random: &Random, ctx: &mut TxContext) {
 
 fun new(rng: &mut RandomGenerator, ctx: &mut TxContext): Flatlander {
     let id = object::new(ctx);
-    let b36addr = to_b36(id.uid_to_address());
+    let hexaddr = hex::encode(id.to_bytes()).to_string();
     let color = random_color(rng);
     let sides = random_sides(rng);
     let image_blob = svg(sides, &color);
@@ -80,7 +81,7 @@ fun new(rng: &mut RandomGenerator, ctx: &mut TxContext): Flatlander {
         id,
         color,
         sides,
-        b36addr,
+        hexaddr,
         image_blob,
     }
 }
