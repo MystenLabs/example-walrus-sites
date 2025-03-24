@@ -13,9 +13,8 @@ import {
 import * as baseX from "base-x";
 
 // TODO: replace with the mainnet package.
-const FLATLAND_PACKAGE = "0x4cb65566af16acb9ae48c437e99653e77c06c1b712329486987223ca99f44575";
+const FLATLAND_PACKAGE = "0x140a8983600f0241b06342049dc1172ad342dbe1bca0d082d066f0434ea46ce9";
 const BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
-const b36 = baseX(BASE36);
 
 // Object definitions that mirror the on chain ones
 type Color = {
@@ -137,7 +136,7 @@ function getSubdomainAndPath(scope: string): Path | null {
     if (hostname.length === 3 || (hostname.length === 2 && hostname[1] === "localhost")) {
         // Accept only one level of subdomain eg `subdomain.example.com` or `subdomain.localhost` in
         // case of local development
-        const path = url.pathname == "/" ? "/404.html" : removeLastSlash(url.pathname);
+        const path = removeLastSlash(url.pathname);
         return { subdomain: hostname[0], path } as Path;
     }
     return null;
@@ -149,19 +148,6 @@ function getSubdomainAndPath(scope: string): Path | null {
 function removeLastSlash(path: string): string {
     return path.endsWith("/") ? path.slice(0, -1) : path;
 }
-
-
-function pathToObjectId(path: string): string | null {
-    const objectId = "0x" + toHEX(b36.decode(path.toLowerCase()));
-    console.log(
-        "obtained object id: ",
-        objectId,
-        isValidSuiObjectId(objectId),
-        isValidSuiAddress(objectId),
-    );
-    return isValidSuiObjectId(objectId) ? objectId : null;
-}
-
 
 function notFound() {
     // Display a not found message.
@@ -178,7 +164,8 @@ function notFound() {
         notFound();
         return;
     }
-    const objectId = pathToObjectId(window.location.pathname.slice(1));
+    const objectId = window.location.pathname.slice(1);
+    console.log('NFT objectId', objectId)
     if (!objectId) {
         notFound();
         return;

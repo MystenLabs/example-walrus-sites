@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
-import { isValidSuiObjectId, fromHEX } from "@mysten/sui.js/utils";
+import { isValidSuiObjectId } from "@mysten/sui.js/utils";
 import {
     Box,
     Container,
@@ -29,7 +29,7 @@ function explorerLink(id: string): string {
 
 function flatlanderLink(id: string): string {
     const domain = "flatland"
-    return `http://${domain}.wal.app/${fromHEX(id.substring(2))}`
+    return `http://${domain}.wal.app/0x${id.substring(2)}`
 }
 
 function App() {

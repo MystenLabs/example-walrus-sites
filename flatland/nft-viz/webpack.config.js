@@ -8,6 +8,7 @@ module.exports = {
     entry: {
         index: "./src/index.ts",
     },
+    devtool: 'source-map',
     module: {
         rules: [
             {
