@@ -39,10 +39,9 @@ function App() {
         return isValidSuiObjectId(hash) ? hash : null;
     });
 
-    const [flatlanderPath, setFlatlanderPath] = useState(() => {
+    const [flatlanderPath, _] = useState(() => {
         const path = window.location.pathname.slice(1);
         return path;
-        return isValidSuiObjectId(path) ? path : null;
     });
 
     if (flatlanderPath) {

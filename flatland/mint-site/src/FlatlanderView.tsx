@@ -3,7 +3,7 @@
 
 import { SuiClient } from "@mysten/sui.js/client";
 import { bcs } from "@mysten/sui.js/bcs";
-import { isValidSuiObjectId, fromB64, fromHEX, toHEX } from "@mysten/sui.js/utils";
+import { fromB64, fromHEX, toHEX } from "@mysten/sui.js/utils";
 import { useEffect, useRef, useState } from "react";
 import { Box, Container, Text, Heading, Link } from "@radix-ui/themes";
 
