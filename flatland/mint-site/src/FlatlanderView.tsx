@@ -100,21 +100,21 @@ export function FlatlanderView({ objectId }: FlatlanderViewProps) {
         polygon.setAttribute("fill", `rgb(${color})`);
         let points = "";
         for (let i = 0; i < sides; i++) {
-            points += `${centerX + radius * Math.cos(angle * i + offset)},${centerY + radius * Math.sin(angle * i + offset)
-                } `;
+            points += `${centerX + radius * Math.cos(angle * i + offset)},
+                ${centerY + radius * Math.sin(angle * i + offset)} `;
         }
         polygon.setAttribute("points", points);
 
-        const animation = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
-        animation.setAttribute("attributeName", "transform");
-        animation.setAttribute("begin", "0s");
-        animation.setAttribute("dur", "10s");
-        animation.setAttribute("type", "rotate");
-        animation.setAttribute("from", "0 100 100");
-        animation.setAttribute("to", "360 100 100");
-        animation.setAttribute("repeatCount", "indefinite");
+        const anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
+        anim.setAttribute("attributeName", "transform");
+        anim.setAttribute("begin", "0s");
+        anim.setAttribute("dur", "10s");
+        anim.setAttribute("type", "rotate");
+        anim.setAttribute("from", "0 100 100");
+        anim.setAttribute("to", "360 100 100");
+        anim.setAttribute("repeatCount", "indefinite");
 
-        polygon.appendChild(animation);
+        polygon.appendChild(anim);
         svgRef.current.appendChild(polygon);
     }, [flatlander]);
 
@@ -133,7 +133,7 @@ export function FlatlanderView({ objectId }: FlatlanderViewProps) {
                         minHeight: '100vh'
                     }}
                 >
-                    <Heading mb="4">Uh oh! The provided ID does not appear to be a Flatlander...</Heading>
+                    <Heading mb="4">Uh oh! The provided ID is not a Flatlander...</Heading>
                     <Text>Go back to the <Link href="/">main page</Link> and mint a new one!</Text>
                 </Container>
             </Container>
