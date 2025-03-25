@@ -10,3 +10,4 @@ You will need to faucet some testnet tokens to mint the NFT. To mint the NFT, cl
 ![mint](./doc-assets/mint.png)
 
 Once minted, you can visualize the NFT in the site.
+
