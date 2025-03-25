@@ -127,14 +127,16 @@ export function FlatlanderView({ objectId }: FlatlanderViewProps) {
                     pt="2"
                     px="4"
                     style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        minHeight: '100vh'
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        minHeight: "100vh",
                     }}
                 >
                     <Heading mb="4">Uh oh! The provided ID is not a Flatlander...</Heading>
-                    <Text>Go back to the <Link href="/">main page</Link> and mint a new one!</Text>
+                    <Text>
+                        Go back to the <Link href="/">main page</Link> and mint a new one!
+                    </Text>
                 </Container>
             </Container>
         );
@@ -145,15 +147,15 @@ export function FlatlanderView({ objectId }: FlatlanderViewProps) {
             <Container
                 size="1"
                 style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minHeight: '100vh',
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minHeight: "100vh",
                 }}
                 mx="3"
             >
-                <Box id="picture" mb="4" style={{ display: 'flex', justifyContent: 'center' }}>
+                <Box id="picture" mb="4" style={{ display: "flex", justifyContent: "center" }}>
                     <svg
                         ref={svgRef}
                         width="200"
@@ -162,7 +164,7 @@ export function FlatlanderView({ objectId }: FlatlanderViewProps) {
                         xmlns="http://www.w3.org/2000/svg"
                     />
                 </Box>
-                <Box id="text" style={{ color: 'var(--color)' }}>
+                <Box id="text" style={{ color: "var(--color)" }}>
                     <Heading size="7" mb="4" align="center">
                         your flatlander
                     </Heading>

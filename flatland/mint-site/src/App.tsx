@@ -183,12 +183,12 @@ function App() {
                                         </Link>
                                     </li>
                                     <li>
-                                        We create a <Em>unique page</Em> for each NFT, tied
-                                        to its object ID. The page is styled based on the NFT's
-                                        inner fields (in this case, the color and shape). This
-                                        feature could be great to create new experiences, where the
-                                        user can view and interact with the NFT not only through the
-                                        wallet, but also through a dedicated page.
+                                        We create a <Em>unique page</Em> for each NFT, tied to its
+                                        object ID. The page is styled based on the NFT's inner
+                                        fields (in this case, the color and shape). This feature
+                                        could be great to create new experiences, where the user can
+                                        view and interact with the NFT not only through the wallet,
+                                        but also through a dedicated page.
                                     </li>
                                 </ul>
                             </Text>
