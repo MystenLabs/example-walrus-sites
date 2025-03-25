@@ -117,7 +117,7 @@ fun num_to_ascii(mut num: u64): vector<u8> {
         num = num / 10;
         res.insert(digit + 48, 0);
     };
-    res //
+    res
 }
 
 fun random_color(rng: &mut RandomGenerator): Color {
