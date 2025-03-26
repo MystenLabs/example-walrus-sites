@@ -19,13 +19,13 @@ import { useState } from "react";
 import { ArrowRightIcon, CopyIcon } from "@radix-ui/react-icons";
 import { MintFlatlander } from "./MintFlatlander";
 import { FlatlanderView } from "./FlatlanderView";
+import { useNetworkVariable } from "./networkConfig";
+import { NETWORK_IN_USE } from "./constants";
 
-// TODO: update the SITE_OBJECT for mainnet.
-const SITE_OBJECT_ID = "0xhello";
 const FLATLAND_LINK = "https://en.wikipedia.org/wiki/Flatland";
 
 function explorerLink(id: string): string {
-    return "https://suiscan.xyz/testnet/object/" + id;
+    return "https://suiscan.xyz/" + NETWORK_IN_USE + "/object/" + id;
 }
 
 function flatlanderLink(id: string): string {
@@ -99,8 +99,8 @@ function App() {
                                 ) : (
                                     <Text>
                                         <Strong>
-                                            Please connect your Testnet wallet (button on the top
-                                            left)
+                                            Please connect your {NETWORK_IN_USE} wallet (button on
+                                            the top left)
                                         </Strong>
                                     </Text>
                                 )}
@@ -178,7 +178,9 @@ function App() {
                                         This site is hosted on <Em>Sui</Em>, and all the resources
                                         it needs are loaded from <Em>Walrus</Em>. You can see the
                                         Sui object corresponding to this site{" "}
-                                        <Link href={explorerLink(SITE_OBJECT_ID)}>
+                                        <Link
+                                            href={explorerLink(useNetworkVariable("siteObjectId"))}
+                                        >
                                             in the explorer.
                                         </Link>
                                     </li>
