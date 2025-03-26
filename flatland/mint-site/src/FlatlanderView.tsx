@@ -1,15 +1,13 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-import { SuiClient } from "@mysten/sui.js/client";
 import { bcs } from "@mysten/sui.js/bcs";
 import { fromB64, fromHEX, toHEX } from "@mysten/sui.js/utils";
 import { useEffect, useRef, useState } from "react";
 import { Box, Container, Text, Heading, Link } from "@radix-ui/themes";
-
-// TODO: replace with the mainnet package.
-const FLATLAND_PACKAGE = "0xb677cfe41a5a5db4ff50a5dca3a2acff9d0cba4b4318abc573fed85a38b806df";
-const FLATLANDER_TYPE = FLATLAND_PACKAGE + "::flatland::Flatlander";
+import { useSuiClient } from "@mysten/dapp-kit";
+import { useNetworkVariable } from "./networkConfig";
+import { SuiClient } from "@mysten/sui.js/client";
 
 // Object definitions that mirror the on chain ones
 type Color = {
@@ -42,8 +40,11 @@ const FlatlanderStruct = bcs.struct("Flatlander", {
     sides: bcs.u8(),
 });
 
-async function getFlatlander(objectId: string): Promise<Flatlander | null> {
-    const client = new SuiClient({ url: "https://fullnode.testnet.sui.io:443" });
+async function getFlatlander(
+    client: SuiClient,
+    objectId: string,
+    flatlanderType: string,
+): Promise<Flatlander | null> {
     const obj = await client.getObject({
         id: objectId,
         options: { showBcs: true, showType: true },
@@ -53,7 +54,7 @@ async function getFlatlander(objectId: string): Promise<Flatlander | null> {
         obj.data &&
         obj.data.bcs &&
         obj.data.bcs.dataType === "moveObject" &&
-        obj.data.type === FLATLANDER_TYPE
+        obj.data.type === flatlanderType
     ) {
         let struct = FlatlanderStruct.parse(fromB64(obj.data.bcs.bcsBytes));
         return struct as Flatlander;
@@ -71,11 +72,13 @@ interface FlatlanderViewProps {
 }
 
 export function FlatlanderView({ objectId }: FlatlanderViewProps) {
+    const flatlanderType = useNetworkVariable("flatlanderPackageId") + "::flatland::Flatlander";
     const [flatlander, setFlatlander] = useState<Flatlander | null>(null);
     const svgRef = useRef<SVGSVGElement>(null);
+    const client = useSuiClient();
 
     useEffect(() => {
-        getFlatlander(objectId).then(setFlatlander);
+        getFlatlander(client, objectId, flatlanderType).then(setFlatlander);
     }, [objectId]);
 
     useEffect(() => {
@@ -117,6 +120,8 @@ export function FlatlanderView({ objectId }: FlatlanderViewProps) {
         polygon.appendChild(anim);
         svgRef.current.appendChild(polygon);
     }, [flatlander]);
+
+    document.title = "View your Flatlander!";
 
     if (!flatlander) {
         return (
