@@ -24,3 +24,4 @@ Note that to run the script, you _must_ have:
 * the Walrus Sites CLI and config.
 
 Uses Python 3.11, with Pydantic and Pyyaml as dependencies.
+

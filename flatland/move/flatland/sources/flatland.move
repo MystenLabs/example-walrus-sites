@@ -2,14 +2,10 @@
 module flatland::flatland;
 
 use std::string::String;
-use sui::address;
 use sui::display;
 use sui::package;
+use sui::hex;
 use sui::random::{Random, RandomGenerator};
-
-const BASE36: vector<u8> = b"0123456789abcdefghijklmnopqrstuvwxyz";
-const VISUALIZATION_SITE: address =
-    @0xa169a210be515b075859c1692f5cab95cadfb02a164a175abf67d1d475d94e65;
 
 // editorconfig-checker-disable
 const POINTS_TABLE: vector<vector<u8>> = vector[
@@ -38,7 +34,7 @@ public struct Flatlander has key, store {
     id: UID,
     color: Color,
     sides: u8,
-    b36addr: String,
+    hexaddr: String,
     image_blob: String,
 }
 
@@ -51,15 +47,11 @@ fun init(otw: FLATLAND, ctx: &mut TxContext) {
 
     display.add(
         b"link".to_string(),
-        b"https://{b36addr}.walrus.site".to_string(),
+        b"https://flatland.wal.app/0x{hexaddr}".to_string(),
     );
     display.add(
         b"image_url".to_string(),
         b"data:image/svg+xml;charset=utf8,{image_blob}".to_string(),
-    );
-    display.add(
-        b"walrus site address".to_string(),
-        VISUALIZATION_SITE.to_string(),
     );
     display.update_version();
 
@@ -78,7 +70,7 @@ entry fun mint(random: &Random, ctx: &mut TxContext) {
 
 fun new(rng: &mut RandomGenerator, ctx: &mut TxContext): Flatlander {
     let id = object::new(ctx);
-    let b36addr = to_b36(id.uid_to_address());
+    let hexaddr = hex::encode(id.to_bytes()).to_string();
     let color = random_color(rng);
     let sides = random_sides(rng);
     let image_blob = svg(sides, &color);
@@ -86,7 +78,7 @@ fun new(rng: &mut RandomGenerator, ctx: &mut TxContext): Flatlander {
         id,
         color,
         sides,
-        b36addr,
+        hexaddr,
         image_blob,
     }
 }
@@ -125,7 +117,7 @@ fun num_to_ascii(mut num: u64): vector<u8> {
         num = num / 10;
         res.insert(digit + 48, 0);
     };
-    res //
+    res
 }
 
 fun random_color(rng: &mut RandomGenerator): Color {
@@ -136,40 +128,7 @@ fun random_sides(rng: &mut RandomGenerator): u8 {
     rng.generate_u8_in_range(3, 14)
 }
 
-public fun to_b36(addr: address): String {
-    let source = address::to_bytes(addr);
-    let size = 2 * vector::length(&source);
-    let b36copy = BASE36;
-    let base = vector::length(&b36copy);
-    let mut encoding = vector::tabulate!(size, |_| 0);
-    let mut high = size - 1;
-
-    source.length().do!(|j| {
-        let mut carry = source[j] as u64;
-        let mut it = size - 1;
-        while (it > high || carry != 0) {
-            carry = carry + 256 * (encoding[it] as u64);
-            let value = (carry % base) as u8;
-            *&mut encoding[it] = value;
-            carry = carry / base;
-            it = it - 1;
-        };
-        high = it;
-    });
-
-    let mut str: vector<u8> = vector[];
-    let mut k = 0;
-    let mut leading_zeros = true;
-    while (k < vector::length(&encoding)) {
-        let byte = encoding[k] as u64;
-        if (byte != 0 && leading_zeros) {
-            leading_zeros = false;
-        };
-        let char = b36copy[byte];
-        if (!leading_zeros) {
-            str.push_back(char);
-        };
-        k = k + 1;
-    };
-    str.to_string()
+#[test_only]
+public fun mint_internal(random: &Random, ctx: &mut TxContext) {
+    mint(random, ctx)
 }

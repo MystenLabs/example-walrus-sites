@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
-import { isValidSuiObjectId, fromHEX } from "@mysten/sui.js/utils";
+import { isValidSuiObjectId } from "@mysten/sui.js/utils";
 import {
     Box,
     Container,
@@ -18,19 +18,18 @@ import {
 import { useState } from "react";
 import { ArrowRightIcon, CopyIcon } from "@radix-ui/react-icons";
 import { MintFlatlander } from "./MintFlatlander";
-import baseX from "base-x";
+import { FlatlanderView } from "./FlatlanderView";
 
-const BASE36 = "0123456789abcdefghijklmnopqrstuvwxyz";
-const SITE_OBJECT_ID = "0xd20b90149409ba5d005d4a2cd981db9494bc3cdb2f04c47ca1af98dd8f71610a";
+// TODO: update the SITE_OBJECT for mainnet.
+const SITE_OBJECT_ID = "0xhello";
 const FLATLAND_LINK = "https://en.wikipedia.org/wiki/Flatland";
-const b36 = baseX(BASE36);
 
 function explorerLink(id: string): string {
     return "https://suiscan.xyz/testnet/object/" + id;
 }
 
 function flatlanderLink(id: string): string {
-    return "https://" + b36.encode(fromHEX(id.substring(2))) + ".walrus.site";
+    return `/${id}`;
 }
 
 function App() {
@@ -39,6 +38,15 @@ function App() {
         const hash = window.location.hash.slice(1);
         return isValidSuiObjectId(hash) ? hash : null;
     });
+
+    const [flatlanderPath, _] = useState(() => {
+        const path = window.location.pathname.slice(1);
+        return path;
+    });
+
+    if (flatlanderPath) {
+        return <FlatlanderView objectId={flatlanderPath} />;
+    }
 
     return (
         <>
@@ -113,7 +121,7 @@ function App() {
                                 <Flex direction="row" gap="2" pb="0">
                                     <Link href={flatlanderLink(flatlanderId)}>
                                         <Button variant="solid">
-                                            View the Flatlander site! <ArrowRightIcon />
+                                            View the Flatlander page! <ArrowRightIcon />
                                         </Button>
                                     </Link>
                                     <Box pt="2">
@@ -167,25 +175,20 @@ function App() {
                             <Text>
                                 <ul>
                                     <li>
-                                        First and foremost, this site hosted on <Em>Sui</Em>, and
-                                        all the resources it needs are loaded from <Em>Walrus</Em>.
-                                        You can see the Sui object corresponding to this site{" "}
+                                        This site is hosted on <Em>Sui</Em>, and all the resources
+                                        it needs are loaded from <Em>Walrus</Em>. You can see the
+                                        Sui object corresponding to this site{" "}
                                         <Link href={explorerLink(SITE_OBJECT_ID)}>
                                             in the explorer.
                                         </Link>
                                     </li>
                                     <li>
-                                        These resources are all fetched and loaded by custom
-                                        software in your browser, without the need to use gateways
-                                        (as similar IPFS- or Arweave-based solutions do).
-                                    </li>
-                                    <li>
-                                        Finally, there is a <Em>unique site</Em> for each NFT, tied
-                                        to its object ID. The site is styled based on the NFT's
-                                        inner fields (in this case, the color and shape). This
-                                        feature could be great to create new experiences, where the
-                                        user can view and interact with the NFT not only through the
-                                        wallet, but also through a dedicated site.
+                                        We create a <Em>unique page</Em> for each NFT, tied to its
+                                        object ID. The page is styled based on the NFT's inner
+                                        fields (in this case, the color and shape). This feature
+                                        could be great to create new experiences, where the user can
+                                        view and interact with the NFT not only through the wallet,
+                                        but also through a dedicated page.
                                     </li>
                                 </ul>
                             </Text>
