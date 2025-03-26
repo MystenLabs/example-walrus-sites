@@ -1,5 +1,5 @@
 {
 	"routes": {
-		"/*": "/flatlander.html"
+		"/*": "/index.html"
 	}
 }

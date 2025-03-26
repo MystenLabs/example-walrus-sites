@@ -2,5 +2,5 @@
 // SPDX-License-Identifier: Apache-2.0
 
 export const TESTNET_FLATLAND_PACKAGE_ID =
-    "0x140a8983600f0241b06342049dc1172ad342dbe1bca0d082d066f0434ea46ce9";
+    "0xb677cfe41a5a5db4ff50a5dca3a2acff9d0cba4b4318abc573fed85a38b806df";
 export const MAINNET_FLATLAND_PACKAGE_ID = "0xTODO";
