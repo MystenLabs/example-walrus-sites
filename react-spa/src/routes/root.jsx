@@ -79,7 +79,7 @@ export default function Root() {
                             </code>
                             , can enable this on walrus. Learn more in our{" "}
                             <a
-                                href="https://docs.walrus.site"
+                                href="https://docs.wal.app"
                                 style={{ color: "#007BFF", textDecoration: "none" }}
                             >
                                 docs
