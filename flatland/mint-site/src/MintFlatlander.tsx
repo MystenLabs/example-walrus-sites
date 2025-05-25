@@ -1,15 +1,28 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-import { TransactionBlock } from "@mysten/sui.js/transactions";
+import { Transaction } from "@mysten/sui/transactions";
 import { Button, Container } from "@radix-ui/themes";
-import { useSignAndExecuteTransactionBlock } from "@mysten/dapp-kit";
+import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 import { useNetworkVariable } from "./networkConfig";
-import { SuiTransactionBlockResponse } from "@mysten/sui.js/client";
+import { SuiTransactionBlockResponse } from "@mysten/sui/client";
 
 export function MintFlatlander({ onCreated }: { onCreated: (id: string) => void }) {
     const flatlanderPackageId = useNetworkVariable("flatlanderPackageId");
-    const { mutate: signAndExecute } = useSignAndExecuteTransactionBlock();
+    const client = useSuiClient();
+    const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction({
+        execute: async ({ bytes, signature }) =>
+            await client.executeTransactionBlock({
+                transactionBlock: bytes,
+                signature,
+                options: {
+                    // Raw effects are required so the effects can be reported back to the wallet
+                    showRawEffects: true,
+                    // Select additional data to return
+                    showObjectChanges: true,
+                },
+            }),
+    });
 
     return (
         <Container my="2">
@@ -20,15 +33,15 @@ export function MintFlatlander({ onCreated }: { onCreated: (id: string) => void 
     );
 
     function create() {
-        const txb = new TransactionBlock();
+        const txb = new Transaction();
 
         txb.moveCall({
             arguments: [txb.object("0x8")], // 0x8 is the Random Object
             target: `${flatlanderPackageId}::flatland::mint`,
         });
 
-        signAndExecute(
-            { transactionBlock: txb, options: { showEffects: true, showObjectChanges: true } },
+        signAndExecuteTransaction(
+            { transaction: txb, },
             { onSuccess: (tx) => onSuccess(tx as SuiTransactionBlockResponse) },
         );
     }

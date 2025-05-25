@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
-import { isValidSuiObjectId } from "@mysten/sui.js/utils";
+import { isValidSuiObjectId } from "@mysten/sui/utils";
 import {
     Box,
     Container,
