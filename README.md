@@ -11,7 +11,8 @@ If you are considering contributing, please read our [contributing guidelines](C
 
 ### Deprecated examples
 
-- `capacity`: A site showing the utilization of storage on Walrus, as well as the blob registration events.
+- `capacity`: A site showing the utilization of storage on Walrus, as well as the blob
+registration events. This information is now available at https://walruscan.com/.
 - `publish`: Allows to publish blob to Walrus. This has been taken from the [Walrus docs
   examples](https://github.com/MystenLabs/walrus/tree/main/docs/examples/javascript).
 
