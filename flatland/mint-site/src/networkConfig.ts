@@ -1,7 +1,7 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-import { getFullnodeUrl } from "@mysten/sui.js/client";
+import { getFullnodeUrl } from "@mysten/sui/client";
 import {
     TESTNET_FLATLAND_PACKAGE_ID,
     MAINNET_FLATLAND_PACKAGE_ID,

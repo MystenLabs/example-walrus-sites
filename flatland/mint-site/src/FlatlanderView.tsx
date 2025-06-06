@@ -1,13 +1,13 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-import { bcs } from "@mysten/sui.js/bcs";
-import { fromB64, fromHEX, toHEX } from "@mysten/sui.js/utils";
+import { bcs } from "@mysten/bcs";
+import { fromBase64, fromHex, toHex } from "@mysten/utils";
 import { useEffect, useRef, useState } from "react";
 import { Box, Container, Text, Heading, Link } from "@radix-ui/themes";
 import { useSuiClient } from "@mysten/dapp-kit";
 import { useNetworkVariable } from "./networkConfig";
-import { SuiClient } from "@mysten/sui.js/client";
+import { SuiClient } from "@mysten/sui/client";
 
 // Object definitions that mirror the on chain ones
 type Color = {
@@ -24,8 +24,8 @@ type Flatlander = {
 
 // Define UID as a 32-byte array, then add a transform to/from hex strings.
 const UID = bcs.fixedArray(32, bcs.u8()).transform({
-    input: (id: string) => fromHEX(id),
-    output: (id) => toHEX(Uint8Array.from(id)),
+    input: (id: string) => fromHex(id),
+    output: (id) => toHex(Uint8Array.from(id)),
 });
 
 const ColorStruct = bcs.struct("Color", {
@@ -56,7 +56,7 @@ async function getFlatlander(
         obj.data.bcs.dataType === "moveObject" &&
         obj.data.type === flatlanderType
     ) {
-        let struct = FlatlanderStruct.parse(fromB64(obj.data.bcs.bcsBytes));
+        let struct = FlatlanderStruct.parse(fromBase64(obj.data.bcs.bcsBytes));
         return struct as Flatlander;
     }
 
