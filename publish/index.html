@@ -105,7 +105,7 @@
             blobId: storage_info.alreadyCertified.blobId,
             endEpoch: storage_info.alreadyCertified.endEpoch,
             suiRefType: "Previous Sui Certified Event",
-            suiRef: storage_info.alreadyCertified.event.txDigest,
+            suiRef: storage_info.alreadyCertified.eventOrObject.Event.txDigest,
             suiBaseUrl: SUI_VIEW_TX_URL,
           };
         } else if ("newlyCreated" in storage_info) {
